@@ -25,9 +25,9 @@ router.get("/test", async (req: any, res: any) => {
     };
 
     // Get all clients - no parameters
-    const clientsData = await tutorCruncherClient.updateResource(
-      ResourceType.CLIENTS,
-      payload
+    const clientsData = await tutorCruncherClient.getResourceById(
+      ResourceType.CONTRACTORS,
+      clientID
     );
 
     const responseData = {

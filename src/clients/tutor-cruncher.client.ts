@@ -4,12 +4,10 @@ import { ResourceType } from "../enums/tc-resource-type.enums";
 
 export class TutorCruncherClient {
   private baseUrl: string;
-  private branchId: string | number;
   private token: string | null;
 
   constructor(branchId: string | number) {
     this.baseUrl = "https://secure.tutorcruncher.com/api";
-    this.branchId = branchId;
     this.token = BranchUtils.getBranchToken(branchId);
 
     if (!this.token) {
@@ -71,6 +69,7 @@ export class TutorCruncherClient {
       ResourceType.RECIPIENTS,
     ];
     const method = usePostForUpdate.includes(resourceType) ? "POST" : "PUT";
+
     const endpoint =
       method === "POST" ? `/${resourceType}/` : `/${resourceType}/${id}`;
 
