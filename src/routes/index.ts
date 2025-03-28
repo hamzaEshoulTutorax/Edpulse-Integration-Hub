@@ -14,17 +14,8 @@ router.get("/test", async (req: any, res: any) => {
     const branchId = req.query.branchId as string;
     const clientID = req.query.clientId as string;
 
-    // Use BranchUtils to get the branch token
-    const branchToken = BranchUtils.getBranchToken(branchId);
-
-    if (!branchToken) {
-      return res
-        .status(400)
-        .json({ message: "Invalid branch ID or missing token" });
-    }
-
     // Initialize TutorCruncher client with the token
-    const tutorCruncherClient = new TutorCruncherClient(branchToken);
+    const tutorCruncherClient = new TutorCruncherClient(branchId);
 
     const payload = {
       user: {

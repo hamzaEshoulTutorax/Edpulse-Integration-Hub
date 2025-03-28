@@ -1,13 +1,20 @@
 import axios from "axios";
+import { BranchUtils } from "../utils/branch.utils";
 import { ResourceType } from "../enums/tc-resource-type.enums";
 
 export class TutorCruncherClient {
   private baseUrl: string;
-  private token: string;
+  private branchId: string | number;
+  private token: string | null;
 
-  constructor(token: string) {
+  constructor(branchId: string | number) {
     this.baseUrl = "https://secure.tutorcruncher.com/api";
-    this.token = token;
+    this.branchId = branchId;
+    this.token = BranchUtils.getBranchToken(branchId);
+
+    if (!this.token) {
+      throw new Error(`No token found for branch ID: ${branchId}`);
+    }
   }
 
   async apiRequest(
@@ -38,15 +45,15 @@ export class TutorCruncherClient {
     }
   }
 
+  async getResourceById(resourceType: ResourceType, id: string): Promise<any> {
+    return this.apiRequest(`/${resourceType}/${id}`, "GET");
+  }
+
   async getAllResources(
     resourceType: ResourceType,
     params: any = {}
   ): Promise<any> {
     return this.apiRequest(`/${resourceType}/`, "GET", null, params);
-  }
-
-  async getResourceById(resourceType: ResourceType, id: string): Promise<any> {
-    return this.apiRequest(`/${resourceType}/${id}`, "GET");
   }
 
   async createResource(resourceType: ResourceType, data: any): Promise<any> {
@@ -63,7 +70,6 @@ export class TutorCruncherClient {
       ResourceType.CONTRACTORS,
       ResourceType.RECIPIENTS,
     ];
-
     const method = usePostForUpdate.includes(resourceType) ? "POST" : "PUT";
     const endpoint =
       method === "POST" ? `/${resourceType}/` : `/${resourceType}/${id}`;
