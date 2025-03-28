@@ -1,0 +1,33 @@
+{
+  "name": "scripts-api",
+  "version": "1.0.0",
+  "description": "Backend for Tutorax AI Pairing Agent",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "postinstall": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@bull-board/api": "^6.7.9",
+    "@bull-board/express": "^6.7.9",
+    "@supabase/supabase-js": "^2.49.1",
+    "@types/bull": "^3.15.9",
+    "axios": "^1.7.7",
+    "bull": "^4.16.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  }
+}
